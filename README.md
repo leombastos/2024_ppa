@@ -11,7 +11,7 @@ To download the needed files, follow the instructions below:
 
 --- 
 
-To access the main page of the class, including further instructions and resources, click [here](https://leombastos.github.io/bastoslab/teaching/2023-apa/2023-apa.html).  
+To access the main page of the class, including further instructions and resources, click [here](https://leombastos.github.io/bastoslab/teaching/2024-ppa/2024-ppa.html).  
 
 If you have any questions or issues, please contact me by email (**lmbastos@uga.edu**).  
 
