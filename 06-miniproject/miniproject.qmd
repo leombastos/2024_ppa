@@ -86,6 +86,7 @@ Then, write a full sentence to answer the question.
 
 ## Create an interactive map with your category values for all counties in Georgia for the most recent reported year.  
 
+
 # Submitting your work  
 Once you have developed all the code and answers, make sure to Render this quarto file.  
 
@@ -103,11 +104,11 @@ Once you have developed all the code and answers, make sure to Render this quart
   
   - If a given chunk is also outputting warnings or messages, inhibit this behavior by changing the chunk options `message` and `warning` to `FALSE` (I'll demo this in a moment).  
   
-  - If, after rendered, 2 lines of text are connected and you wish to "break line" between them, add 2 extra spaces after the first one (I'lld demo this in a moment).
+  - If, after rendered, 2 lines of text are connected and you wish to "break line" between them, add 2 extra spaces after the first one (I'lld demo this in a moment).  
 
-After rendering, an .html file will be created on your `code` folder.
+After rendering, an .html file will be created on your `code` folder.  
 
-Rename this file to `LASTNAME_COMMODITY_CATEGORY_miniproject.html`.
+Rename this file to `LASTNAME_COMMODITY_CATEGORY_miniproject.html`.    
 
 For ex., `Bastos_soybeans_production_miniproject.html`.
 
