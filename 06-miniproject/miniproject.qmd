@@ -96,7 +96,7 @@ Once you have developed all the code and answers, make sure to Render this quart
 - If it does not look professional for whatever reason, then fix the issue, re-render it, recheck.  
 - Only send me your work once your html file looks professional.  
 - Some potential issues you may encounter and how to fix them:   
-  - Some times your code may be creating a table output that is waaay to long and curbersome to scroll through when rendered. If this is the case, make it more professional looking by using the `head()` function to only print the first handful of rows (instead of thousands of rows).  
+  - Some times your code may be creating a table output that is waaay to long and cumbersome to scroll through when rendered. If this is the case, make it more professional looking by using the `head()` function to only print the first handful of rows (instead of thousands of rows).  
   
   - **DO NOT** delete the file's heading levels (# and ##). They set up the proper heading 1 and 2 levels, and I use them to guide my grading.  
   

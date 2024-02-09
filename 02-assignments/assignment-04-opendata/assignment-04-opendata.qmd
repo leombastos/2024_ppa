@@ -1,0 +1,73 @@
+---
+title: "Assignment 4 - Digitizing and Open data"
+author: "YOUR NAME HERE"  
+format:
+  html:
+    code-fold: false
+    embed-resources: true
+    toc: true
+    number-sections: true
+    theme: cerulean
+---
+
+# Introduction  
+Now it is your turn to   
+  - digitize a field boundary  
+  - retrieve open data related to soil series and elevation, and  
+  - create plots to explore it
+
+Find an agricultural field of your interest. This could be a field from a farm you have access to, or perhaps a field on a UGA research station where your studies are/will be conducted.  
+
+## Question 1) Provide below the longitude and latitude of the centroid of your selected field.  
+
+
+# Setup  
+Use this section to load the necessary packages. Remember, you will to do digitizing AND open data retrieval in this same script.  
+
+# Digitizing  
+Use this section to digitize AND export to file (as .geojson) the boundary of your selected field. When exporting the boundary, make sure to export it to the `output` folder.    
+
+
+# Soil series  
+Use this section to:   
+  - retrieve SSURGO data for your field,  
+  - perform the required wrangling steps, and  
+  - create maps for soil series name and corn yield  
+
+## Question 2) How many different soil series were found in this field? What is their names?  
+
+## Question 3) What were the different values of corn yield for these different soil series?  
+
+
+# Elevation  
+Use this section to:  
+  - retrieve elevation data at the highest zoom level possible  
+  - perform the required wrangling steps, and  
+  - create a map for elevation  
+  
+# Combining and exporting maps  
+Use this section to combine your individual static maps above into one, and export it to file.  
+
+## Question 4) Now that you can visualize all three maps together, try to explain the effect of soil series and elevation on corn yield. Which soil and elevation conditions seem to promote higher yields in this field?  
+
+
+# Submitting your work  
+Once you have developed all the code and answers, make sure to Render this quarto file.  
+
+**Notes on rendering**:  
+
+- Make sure to render your work and inspect how the final html look like.  
+- If it does not look professional for whatever reason, then fix the issue, re-render it, recheck.  
+- Only send me your work once your html file looks professional.  
+  - **DO NOT** delete the file's heading levels (# and ##). They set up the proper heading 1 and 2 levels, and I use them to guide my grading.  
+  - If a given chunk is also outputting warnings or messages, inhibit this behavior by changing the chunk options `message` and `warning` to `FALSE` (I'll demo this in a moment).  
+  
+  - If, after rendered, 2 lines of text are connected and you wish to "break line" between them, add 2 extra spaces after the first one (I'lld demo this in a moment).  
+
+After rendering, an .html file will be created on your `code` folder.  
+
+Rename this file to `assignment-04-opendata-LASTNAME.html`.    
+
+For ex., mine would be `assignment-04-opendata-Bastos.html`.
+
+Send the **html** file to **lmbastos@uga.edu** by Feb 16th 11:59 pm.  
