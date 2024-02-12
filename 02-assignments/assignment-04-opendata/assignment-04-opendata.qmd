@@ -10,13 +10,24 @@ format:
     theme: cerulean
 ---
 
+# Instructions  
+Once you download this script from GitHub, then:  
+
+  - Move it into your already-created project folder structure "06 open data", inside the "code" sub-folder.  
+  - You do not need to create new scripts. You can use the class scripts to copy code from, and paste those chunks in this script. All the code needed for this assignment should be inserted in this script.  
+  - I left you the scaffolding of the structure of the exercise (i.e., look on the outline to the right). However, it is your job to decide which chunks/codes you need to paste in this script to answer the questions.  
+  - Make sure that when you paste chunks/codes from the class scripts, that you place the chunks/codes under the appropriate section (again, look on the outline to the right). For ex., the chunk containing the packages needed for the exercise should be under the "Setup" heading 1.  
+  - Besides code, there are 3 specific questions in this script. Make sure that you produce the plot/table needed to answer them, AND that you also write down a sentence for your answer. Only showing a plot/table is not sufficient in answering the questions.  
+
+  
 # Introduction  
 Now it is your turn to   
-  - digitize a field boundary  
-  - retrieve open data related to soil series and elevation, and  
-  - create plots to explore it
 
-Find an agricultural field of your interest. This could be a field from a farm you have access to, or perhaps a field on a UGA research station where your studies are/will be conducted.  
+  - digitize a field boundary  
+  - retrieve open data related to soil series and elevation, and   
+  - create plots to explore it  
+
+Find an agricultural field of your interest. This could be a field from a farm you have access to, or perhaps a field on a UGA research station where your studies were/are/will be conducted.  
 
 ## Question 1) Provide below the longitude and latitude of the centroid of your selected field.  
 
@@ -30,6 +41,7 @@ Use this section to digitize AND export to file (as .geojson) the boundary of yo
 
 # Soil series  
 Use this section to:   
+
   - retrieve SSURGO data for your field,  
   - perform the required wrangling steps, and  
   - create maps for soil series name and corn yield  
@@ -40,7 +52,8 @@ Use this section to:
 
 
 # Elevation  
-Use this section to:  
+Use this section to:   
+
   - retrieve elevation data at the highest zoom level possible  
   - perform the required wrangling steps, and  
   - create a map for elevation  
