@@ -1,0 +1,194 @@
+---
+format:
+  html:
+    embed-resources: true
+knitr: 
+  opts_chunk: 
+    message: false
+    warning: false
+---
+
+# **CRSS 4060/6060 Advanced Precision Ag Spring 2024 Mid-term exam follow up - March 27**
+
+## Name: 
+
+## Instructions  
+
+- Fill in your name above, and rename this file to have your first and last name at the end of it. If you skip this, I won't grade it.  
+
+- On eLC, check the feedback you received on the mid-term exam.
+
+- For questions you got 100% grade, simply answer "100%" below the question and move on to the next.    
+
+- For questions you got <100%, you will be able to answer them again. 
+
+- This time, no partial credit will be given. You either answer 100% correctly and get full credit for it, or keep your previous grade.  
+
+- You can use your own class notes and scripts, and google.  
+
+- You CANNOT exchange information with other students. This is an individual exercise.  
+
+- For questions that involve code (second part of q2, q3, q4, q5, q6), you should answer with working code instead of simply writing words. That will give you a chance to try out different code answers, test which one works, and use that as your response. You may need to load packages to answer these questions.     
+
+- My recommendation is that you start answering the questions you got lowest scores, and then move on to questions you got higher scores. 
+
+- To submit, render this .qmd and send me the .html (make sure it has your name as instructed in the beginning) to lmbastos@uga.edu.
+
+- You have 50 min to complete it.  
+
+## Questions  
+
+### 1. Match package name letter to their use below:  
+
+
+a. `ggplot2`
+b. `readxl`  
+c. `janitor`  
+d. `sf`
+e. `dplyr/tidyr`
+f. `stars`
+
+___ manipulate vector geospatial files  
+___ read excel files  
+___ data wrangling  
+___ create plots  
+___ manipulate raster geospatial files  
+___ standardize column names   
+
+### 2. Replace the dotted lines with the proper missing word on the code below to read different files into R. No need to run this chunk as it won't work since I did not provide you with all the data sets. You can still play around to find the correct function though.  
+
+```{r}
+#| eval: false
+#| echo: true  
+
+df <- read_....("../data/yield.csv")
+df2 <- read_....("../data/soilec.geojson")
+df3 <- read_....("../data/elevation.excel")
+```
+
+Import the provided file `df.csv` into the script using the chunk below. Name the object `df`:
+
+```{r}
+
+
+```
+
+### 3. I want to calculate the average yield for each rep in `df` and assign this result to an object called `df_averaged`. The final result should only have 3 rows (one for each rep). Use the chunk below to write the code to do this task:   
+
+```{r }
+
+  
+```
+
+
+### 4. What would you change in the code above to get the mean for each nrate instead? Write in the chunck below the full code to implement this change, and assign its results to an object called `df_averaged2`. The final result should only have 2 rows (one for each nrate_kgha)
+
+```{r}
+
+
+```
+
+
+### 5. Now I want to plot the results from question 3 and show the average yield value for each rep as a point. Write in the chunk below the full code to do this.
+
+
+```{r}
+
+  
+```
+
+
+### 6. Write down the full code to replicate the following figure using `df`:
+![](q6.png)
+
+```{r}
+
+
+```
+
+
+
+### 7. Suppose you imported a csv file that has x and y columns representing geospatial coordinates. Based on this data, answer the questions below:  
+a. What function would you use to turn this object into geospatial?  
+
+
+b. Once you do that, you need to assign this object the proper native coordinate reference system it was collected with.  What function would you use for that?  
+
+
+c. Assuming the native CRS was WGS84, which EPSG code would you use to represent it?  
+
+
+d. Once we assigned the native CRS of WGS84, we want to now transform it into UTM. Which EPSG code would you in this case, assuming this field is in the same zone as the field we used in class?  
+
+
+### 8. What units are used in WGS84 and UTM? Why is it important to change the CRS from geographic (WGS84) to projected (UTM)?  
+
+
+
+### 10. Below is the distribution of yield monitor data for a field. Based on what we did in class, answer the questions below:  
+![](q10.png)
+a. What does the red (on the left side) dotted line represent?  
+
+b. What does the red (on the left side) solid line represent?  
+
+c. What does the blue (on the right side) dotted line represent?  
+
+d. What does the blue (on the right side) solid line represent?  
+
+e. Which region of data points would be kept after applying the min/max yield filter?  
+
+
+### 11. What is the name of the interpolation method used in class? Which 2 functions are needed to perform this method?  
+
+
+### 12. When performing yield spatial-temporal stability analysis, we utilize multi-year yield monitor data and classify each pixel as 1 of 4 categories. Write down the rules used in class to categorize data points into one of the 4 classes of inconsistent, consistently high yield, consistently average yield, and consistently low yield.
+
+
+
+### 13. What primary data layer is needed to compute secondary terrain variables? List all the secondary terrain variables derived in class.  
+
+
+
+### 14. Based on the documentation below and assuming north is upwards, answer below based on the dotted lines on the map indicating the cardinal direction (N, NE, E, SE, S,SW, W, NW) represented by each numerical class. For this map, in which cardinal direction does water flow for the majority of the pixels?      
+![](q14doc.png)
+
+![](q14.png)
+
+1 =   
+128 =   
+16 =   
+2 =   
+32 =   
+4 =   
+64 =   
+8 =   
+
+
+### 15. Answer below what type of geospatial file (vector or raster) each of these options would be:  
+- UAV imagery:    
+- County boundaries:  
+- Smartphone picture: 
+- Veris-derived soil ECa (before interpolation):  
+- Satellite imagery:  
+- Field boundary:    
+
+### 16. List the three methods discussed in class used to measure in-situ bulk soil apparent electrical conductivity (ECa).  
+
+
+### 17. List the three main factors affecting soil ECa discussed in class. How are each of them related (e.g., as factor x increases, soil ECa increases/decreases)?  
+
+
+### 18. You are assisting a grower to collect soil ECa data on her field. List at least 3 questions you would ask her about field/management/history to ensure that your soil ECa data will be controlled by texture and thus useful in precision ag applications.  
+
+
+
+
+
+
+
+
+
+
+
+
+
