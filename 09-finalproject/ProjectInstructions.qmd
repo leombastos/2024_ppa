@@ -118,7 +118,7 @@ With that, when you have issues running code, here are a few resources you can u
 
 - If you want to bring in this script a **figure** that you created using a different script that exported it to the `output` folder, and assuming this script is in your code folder, you would do so by using the following code:
 
-`![](../output/figure1.png)` 
+`![](../output/figure1.png)`
 
 - When creating figures, make sure to add a descriptive title, and that legends are professional and include units.  
 
