@@ -1,0 +1,191 @@
+---
+title: "Satellite retrieval"
+format: html
+---
+
+# Exercise's goals  
+The goals for this exercise are to:  
+  - Understand the different options of satellite data we can pull from Planet  
+  - Define our parameters of interest to pull imagery for our field  
+  - Make an API call and download imagery for one growing season  
+
+# Introduction  
+Planet is a private company that offers satellite-based imaging products. 
+
+## Flocks  
+Planet has launched three dove missions, also called flocks:  
+  - Dove classic (PS2)  
+  - Dove-R (PS2.SD)  
+  - SuperDove (PSB.SD)  
+
+Each flock has their own **available bands** and **temporal coverage**.  
+For more information on sensor bands, see https://developers.planet.com/docs/apis/data/sensors/.  
+  
+## Asset types  
+Multiple asset types are made available for Scene products, each with differences in radiometric processing and/or rectification. Those include:  
+
+  - Basic analytic (least processed)  
+  - Analytic  
+  - Visual  
+  - **Surface reflectance** (most processed, what we want!)  
+
+Let's take a look at their website for more in-depth explanations: Let's explore their website: https://developers.planet.com/docs/data/planetscope/  
+
+  
+Planet offers an applicaiton programming interface (API) that we can utilize to pull imagery from their data base using R.  
+
+Let's do it.  
+
+# Setup  
+```{r}
+#remotes::install_github("bevingtona/planetR")
+#install.packages("httr")
+#install.packages("jsonlite")
+#install.packages("beepr")
+
+library(planetR)
+library(httr)
+library(jsonlite)
+library(raster)
+library(stringr)
+library(sf)
+library(beepr)
+```
+
+To pull satellite images from the Planet API, we need to define a list of parameters, including:  
+
+  - **Field bounding box**: to define the spatial extent we want to pull  
+  - **Start and end date**: in our case, let's pull imagery during the growing season (04-15 to 09-30) for each of the three years (2017, 2019, 2020)
+  - **Limit of clouds**: how much cloud percentage in each image we accept.  
+  - **Item name**: what is the item name we want to pull. 
+  - **Asset**: what asset we want to pull.
+  
+Let's define those below:
+
+## Bounding box  
+To obtain the bounding box, we need to first bring the field boundary and extract its bounding box with function `extent()`.  
+```{r }
+bbox 
+
+bbox
+```
+Let's also give a name to this site:  
+```{r}
+site 
+
+site
+```
+
+## Dates  
+Let's begin by pulling data for 2017.  
+
+```{r}
+# Date range of interest
+date_start 
+date_start
+
+date_end   
+date_end
+```
+
+## Other parameters  
+Below, we will ask for:  
+  - cloud limit of up to 0.2 (20%)  
+  - PSScene item name (to obtain PlanetScope imagery, daily, 3-m)  
+  - An analytic, 4- or 8-band, **surface reflectance** product as the asset    
+
+More about item name = PSScene:
+  - **Bands**: 
+    - Sensors PS2 and PS2.SD deliver **four bands**: red, green, blue, and near-infrared. 
+    - PSB.SD sensor has an **additional four bands**: green I, yellow, coastal blue, and red edge.
+
+  - **Temporal extent**: 
+    - PS2 imagery availability: July, 2014 to April 29, 2022. 
+    - PS2.SD imagery availability: March, 2019 to April 22, 2022. 
+    - PSB.SD imagery availability: mid-March, 2020 to current monitoring.
+  
+```{r}
+# Metadata filters
+cloud_lim  # percent from 0-1
+
+item_name  # (see https://developers.planet.com/docs/data/items-assets/)
+
+asset  # (see https://developers.planet.com/docs/data/items-assets/)
+
+```
+
+## Folder structure  
+Let's create a folder structure where images will be exported to.  
+
+The goal is to create a folder structure name that is descriptive and includes:  
+  - Site name  
+  - Item name  
+  - Asset  
+  - Starting date  
+  - End date 
+  
+Let's do it below:
+```{r}
+# Set/Create Export Folder
+exportfolder <- paste(site, 
+                      item_name, 
+                      asset, 
+                      lubridate::year(date_start),
+                      lubridate::yday(date_start),  
+                      lubridate::year(date_end),  
+                      lubridate::yday(date_end), 
+                      sep = "-")
+
+exportfolder
+```
+
+Now that we created the name of the folder, let's also create this folder into our `data` directory.  
+```{r}
+
+
+```
+
+
+## API key  
+Lastly, for us to be able to connect to Planet's API, we need to provide our **API key**.  
+
+This key is specific to the account you created, and it should have received a confirmation email from Planet with information about your key.  
+
+Copy you key and paste below.  
+
+```{r}
+# Set API
+api_key 
+
+```
+
+# API call  
+Now, we are ready to make an API call.
+
+We'll use the package `planetR` for that.
+
+Go ahead an play the chunk below.  
+It may take a moment for it to be queued and download.  
+When the chunk finishes running, it will beep (sound on!).  
+
+```{r api call}
+# Planet Orders API
+planet_order(api_key = api_key, 
+             bbox = bbox, 
+             date_end = date_end,
+             date_start = date_start,
+             cloud_lim = cloud_lim, 
+             item_name = item_name, 
+             asset = asset,
+             order_name = exportfolder)
+
+beepr::beep()
+```
+
+# Summary  
+We now have our Planet imagery downloaded for one growing season!  
+
+# Next steps  
+Next steps here would be to pull imagery for the other 2 years (2019, 2020), and then start analyzing them.  
+
+
