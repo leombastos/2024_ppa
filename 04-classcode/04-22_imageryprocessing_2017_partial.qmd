@@ -1,0 +1,248 @@
+---
+title: "Imagery processing"
+format: html
+---
+
+# Introduction and goals  
+On the previous exercise, we downloaded all imagery available for a field during the growing season for one year.  
+
+Now, there are different ways we can explore these images, including:  
+
+  - **Monitoring**:Tracking a field throughout the season, keeping an eye on the onset of stress.  
+  
+  - **Zoning**: Extracting pixel-based summary statistics (like median) to relate to yield potential zones.  
+
+The goals of this exercise are to explore the two uses described above.  
+
+# Setup  
+```{r setup }
+#| message: false
+#| warning: false
+
+
+library(tidyverse)
+library(sf)
+library(stars)
+library(gganimate)
+library(terra)
+library(ggthemes)
+library(mapview)
+```
+
+```{r}
+boundary <- read_sf("../../05 digitizing/output/boundary.geojson") %>%
+  st_transform(32616)
+
+boundary
+```
+
+# Wrangling  
+Let's import **one image** first and explore it.  
+
+## Importing and wrangling one image  
+```{r imagery}
+image 
+
+image
+
+```
+Notice, on the second panel, we have a **band** row that we haven't seen before.  
+
+This dimension contains all the 4 bands from this image.  
+
+We'll need to extract the bands first. 
+
+Let's do that first, and then calculate a vegetation index.  
+I propose we calculate green normalized difference vegetation index (**gndvi**), which uses the green and the near-infrared (nir) bands.  
+
+```{r image_w}
+image_w 
+
+image_w
+```
+
+```{r}
+mapview(image_w)
+```
+One down, 46 to go!  
+
+Wait, let's find a way to automate this process.
+
+## Importing and wrangling all images  
+First, let's create a list with all tif files.  
+
+```{r}
+rastlist 
+
+rastlist
+
+# Ho many images?
+length(rastlist)
+
+rastlist[[1]]
+```
+What information is contained within the file name?  
+
+`20170421_153046_1044_3B_AnalyticMS_SR_clip.tif`  
+
+**20170421** = acquisition date, in YYYYMMDD    
+**153046** =  acquisition time, in HHMMSS  
+**1044** = acquisition time, second hundredths  
+**3B** = product level   
+**AnalyticMS** = band product  
+**SR** = reflectance type  
+**clip** = clipped to area extent  
+
+Now, let's create code that reads each file and applies the wrangling steps we developed above.   
+
+We'll also need to **retrieve the date from the file name and have it as a column** in the dataframe, so we can differentiate the various images.  
+
+```{r allimages_w}
+allimages_w 
+
+allimages_w
+
+```
+
+```{r}
+
+```
+The images were cropped to the bounding box on Planet's side.  
+Let's further crop them to the field boundary.  
+
+## Cropping to field boundary  
+```{r allimages_crop}
+allimages_crop 
+
+```
+
+
+# Pixel-based analysis  
+To perform pixel-based analysis, we'll need to extract pixel-level information across all dates.  
+
+Before we do that, I want to transform our stars (raster) into sf (vector) for ease of visualization.  
+
+```{r pixels}
+pixels 
+
+# How many rows?
+
+# Peeking
+
+```
+
+## Case study: monitoring  
+
+Let's plot all dates below.  
+
+**WARNING**: the chunk below takes a while to run. DO NOT run in class, just look at my figure for efficiency. You create the figure on your side after class if you wish.  
+
+
+```{r}
+pixels %>%
+  ggplot() +
+  geom_sf(aes(fill = gndvi,
+              color = gndvi
+  ), 
+  size = 1) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  scale_color_viridis_c(na.value = "transparent") +
+  theme_map() +
+  theme(legend.position = "bottom") +
+  facet_wrap(~date)
+
+
+ggsave("../output/2017_gndvi_ts.png",
+       width = 6,
+       height = 8, 
+       bg = "white")
+```
+
+
+Let's take a sample of the pixels and plot them throughout the season:  
+
+```{r}
+
+```
+
+What happened on July 4th?  
+
+Based on both plots above, let's remove low quality images based on:  
+  - Cloud coverage  
+  - Abnormal values  
+  
+## Removing low-quality images   
+```{r}
+pixels_f 
+
+# How many rows?
+
+# Peeking
+
+```
+
+Now that we have a subset of high-quality images, let's extract the pixel-level **median** value across the growing season.  
+
+## Pixel-based median  
+Let's visualize what the algorithm will do for us:  
+```{r}
+median 
+
+
+```
+
+Now let's implement it for each pixel.
+
+If we do not drop geometry, then it takes a long time to compute the median on an sf object.  
+
+Therefore, below we will:  
+  - create a geometry back-up  
+  - drop geometry 
+  - calculate median, and then 
+  - bring geometry back.  
+
+```{r geometrybackup}
+geometrybackup 
+
+geometrybackup
+```
+
+```{r pixel_median}
+# Pixel-based median
+pixel_median 
+
+```
+
+Let's visualize it.  
+
+```{r}
+ggplot()+
+  geom_sf(data = pixel_median, 
+          aes(fill = gndvi, 
+              color = gndvi
+  ))+
+  scale_fill_viridis_c()+
+  scale_color_viridis_c()+
+  labs(title = "Median gndvi")+
+  theme_map()+
+  theme(legend.position = "bottom")
+
+ggsave("../output/2017_gndvi_median.png",
+       width = 4,
+       height = 6,
+       bg = "white")
+
+
+```
+
+How does it compare to 2017 yield for this field?  
+![](../../07 yield monitor/output/2017_interpolated_yield.png)
+
+## Exporting median  
+Let's export the median so we can further analyze it in the next script.  
+```{r}
+
+
+```
+
+
