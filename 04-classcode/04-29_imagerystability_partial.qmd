@@ -1,0 +1,135 @@
+---
+title: "Imagery stability"
+format: html
+---
+# Introduction  
+At this point, we have downloaded growing-season imagery for one field for 3 years.  
+
+For each year, we have extracted, on a pixel basis, the median GNDVI value. Those maps could be related to and represent yield potential areas (i.e., areas with higher growing-season median values have greater yield potential than areas with lower median values).  
+
+What if we used this information to generate a yield spatial-temporal variability analysis?  
+
+The goals of this exercise are to:  
+  - Create spatial-temporal yield stability classes based on year-specific median GNDVI values.  
+  - Compare the GNDVI-based vs. yield-based spatial stability maps  
+  
+
+# Setup  
+```{r}
+#| message: false
+#| warning: false
+
+
+library(tidyverse)
+library(sf)
+library(stars)
+library(ggthemes)
+library(mapview)
+
+```
+
+```{r}
+pixels_17 
+
+pixels_17
+```
+
+```{r}
+pixels_19 
+
+pixels_19
+```
+
+```{r}
+pixels_20 
+
+pixels_20
+```
+
+# Wrangling  
+```{r}
+pixels_all <- pixels_19 %>%
+  st_join(pixels_17,
+          join = st_equals,
+          left = T) %>%
+  st_join(pixels_20,
+          join = st_equals,
+          left = T)
+
+pixels_all
+```
+
+# Spatial-temporal stability analysis  
+
+
+```{r pixel_stab}
+pixel_stab 
+
+pixel_stab %>%
+  summary
+```
+
+
+```{r pixel_stab_class}
+pixel_stab_class <- pixel_stab %>%
+  mutate(stclass = case_when(
+    cv > ...  ~ "unstable",
+    cv < ...  & mean < ...  ~ "low-stable",
+    cv < ...  & mean > ...  & mean < ... ~ "medium-stable",
+    cv < ...  & mean > ...  ~ "high-stable"
+  ))
+
+
+pixel_stab_class %>%
+  group_by(stclass) %>%
+  tally()
+```
+
+# Plots  
+```{r mean std}
+ggplot(data = pixel_stab_class) +
+  geom_sf(aes(fill = ...,
+              color = ...
+  ), size = 1) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  scale_color_viridis_c(na.value = "transparent") +
+  theme_map() +
+  theme(legend.position = "bottom")
+
+```
+
+```{r cv std}
+ggplot(data = pixel_stab_class)+
+  geom_sf(aes(fill = ...,
+              color = ...
+              ), size = 1) +
+  scale_fill_viridis_c(na.value = "transparent") +
+  scale_color_viridis_c(na.value = "transparent") +
+  theme_map()+
+  theme(legend.position = "bottom")
+
+```
+
+```{r stclass}
+ggplot(data = pixel_stab_class)+
+  geom_sf(aes(fill = ...,
+              color = ...
+  ), size = 1) +
+  scale_fill_viridis_d(option = "C") +
+  scale_color_viridis_d(option = "C") +
+  theme_map() +
+  theme(legend.position = "bottom")
+
+```
+How does it compare to yield stability classes?
+![](../../07 yield monitor/output/stclass-stability.png)
+
+# Student evaluations  
+Please take 5 min to respond to the TEVAL.  
+Your feedback is really important for me to know what worked, what didn't, and improve for next time.  
+
+Thanks!
+
+
+Link for evaluation: https://webapps.franklin.uga.edu/evaluation/
+
